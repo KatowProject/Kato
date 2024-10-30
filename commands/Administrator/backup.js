@@ -20,7 +20,7 @@ exports.run = async (client, message) => {
   const m = await message.channel.send("Creating backup...");
 
   try {
-    await backup(client.config.database.uri);
+    await backup();
 
     const files = fs.readdirSync(path.join(__dirname, "../../database/backup"));
     for (const file of files) {
