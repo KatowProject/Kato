@@ -1,8 +1,6 @@
 const { Collection, Message } = require("discord.js");
 const colors = require("colors");
-
 const Client = require("../core/ClientBuilder");
-
 const cooldowns = new Collection();
 
 /**
@@ -17,15 +15,15 @@ module.exports = async (client, message) => {
   )
     return;
 
+  require("../handler/attachment")(client, message);
+  require("../handler/afk")(client, message);
+  require("../handler/donaturPoster")(client, message);
+
   if (message.author.bot) return;
 
   let prefix = null;
   for (const p of client.config.discord.prefix)
-    message.content.startsWith(p) ? (prefix = p) : null;
-
-  require("../handler/attachment")(client, message);
-  require("../handler/afk")(client, message);
-  require("../handler/donaturPoster")(client, message);
+    message.content.startsWith(p.toLowerCase()) ? (prefix = p.toLowerCase()) : null;
 
   if (!message.content.startsWith(prefix)) return;
   const args = message.content.slice(prefix.length).trim().split(/ +/g);
