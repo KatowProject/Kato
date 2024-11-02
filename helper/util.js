@@ -226,7 +226,8 @@ class Util {
 
     this.isJSON = (str) => {
       try {
-        const parse = JSON.parse(str);
+        const decoded = decodeURIComponent(str);
+        const parse = JSON.parse(decoded);
         return (
           (parse && typeof parse === "object") ||
           typeof parse === "boolean" ||
